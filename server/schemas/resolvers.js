@@ -6,7 +6,8 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).select("-__v -password").populate("savedBooks");
+        userData = await User.findOne({ _id: context.user._id }).select("-__v -password").populate("savedBooks");
+        return userData;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -16,11 +17,11 @@ const resolvers = {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw new AuthenticationError('No user found with this email address');
+        throw new AuthenticationError('No user found with this email address!');
       }
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError('Incorrect credentials!');
       }
       const token = signToken(user);
       return { token, user };
@@ -57,11 +58,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You must be logged in!");
     },
-
-   
-
   },
 };
 
 module.exports = resolvers;
-
