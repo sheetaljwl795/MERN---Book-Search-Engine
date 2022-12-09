@@ -23,6 +23,7 @@ const SearchBooks = () => {
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
+  
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -32,9 +33,9 @@ const SearchBooks = () => {
       return false;
     }
 
-    try {
-      const response = await searchGoogleBooks(searchInput);
-
+     try {
+       const response = await searchGoogleBooks(searchInput);
+      
       if (!response.ok) {
         throw new Error('something went wrong!');
       }

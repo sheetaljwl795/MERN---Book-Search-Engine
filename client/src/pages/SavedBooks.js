@@ -9,32 +9,55 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
+  const [removeBook] = useMutation(REMOVE_BOOK);
   const userData = data?.me || {};
   console.log(userData);
 
-  const [removeBook] = useMutation(REMOVE_BOOK);
+ //const [removeBook] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
+    
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
       return false;
     }
 
-    try {
-      await removeBook({ variables: { bookId } });
+    try{
+    const { user}  = await removeBook({
+      variables: { bookId }
+    });
+
+    // eslint-disable-next-line no-const-assign
+    userData = user;
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }
   };
+
+//     // upon success, remove book's id from localStorage
+//     removeBookId(bookId);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+
+
+  //   try {
+  //     await removeBook({ variables: { bookId } });
+  //     removeBookId(bookId);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
   
 
   // if data isn't here yet, say so
-  if (!loading) {
-    return <h2>LOADING...</h2>;
-  }
+   if (!loading) {
+     return <h2>LOADING...</h2>;
+   }
 
   return (
     <>
