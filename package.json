@@ -16,6 +16,9 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "http-proxy-middleware": "^2.0.6"
+    "and": "^0.0.3",
+    "http-proxy-middleware": "^2.0.6",
+    "npm": "^9.2.0",
+    "start": "^5.1.0"
   }
 }
