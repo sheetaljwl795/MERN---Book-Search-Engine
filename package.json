@@ -20,5 +20,8 @@
     "http-proxy-middleware": "^2.0.6",
     "npm": "^9.2.0",
     "start": "^5.1.0"
+  },
+  "engines": {
+    "node": "16.0.0"
   }
 }
